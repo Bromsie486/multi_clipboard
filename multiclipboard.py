@@ -6,9 +6,16 @@ import pprint
 
 SAVED_DATA = "clipboard.json"
 
-def save_data(file_path, data):
+def save_data(file_path):
     with open(file_path, "w") as f:
+        try:
+            data = json.load(f)
+        except:
+            data = load_data(file_path)
+        key = input("Enter a key: ")
+        data[key] = clipboard.paste()
         json.dump(data, f)
+        print("Data saved")
 
 
 def load_data(file_path):
@@ -32,21 +39,21 @@ def search_for_key(file_path):
 
 
 def list_data(file_path):
-    with open(file_path, "r") as f:
-        data = json.load(f)
-        print("These is the current state of the database: ")
-        pprint.pprint(data)
+    try:
+        with open(file_path, "r") as f:
+            data = json.load(f)
+            print("These is the current state of the database: ")
+            pprint.pprint(data)
+    except FileNotFoundError:
+        print("File was not found")
+
 
 
 def main():
     if len(sys.argv) == 2:
         command = sys.argv[1]
-        data = load_data(SAVED_DATA)
         if command == "save":
-            key = input("Enter a key: ")
-            data[key] = clipboard.paste()
-            save_data(SAVED_DATA, data)
-            print("Data saved")
+            save_data(SAVED_DATA)
         elif command == "load":
             search_for_key(SAVED_DATA)
         elif command == "list":
