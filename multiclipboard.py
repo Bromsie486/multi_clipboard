@@ -6,6 +6,7 @@ import pprint
 
 SAVED_DATA = "clipboard.json"
 
+
 def save_data(file_path):
     with open(file_path, "w") as f:
         try:
