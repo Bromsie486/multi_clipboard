@@ -8,24 +8,17 @@ SAVED_DATA = "clipboard.json"
 
 
 def save_data(file_path):
-    with open(file_path, "w") as f:
+    with open(file_path, "r") as f:
         try:
-            data = json.load(f)
+            data = json.load(f) 
         except:
-            data = load_data(file_path)
+            data = {}
+
+    with open(file_path, "w") as f:
         key = input("Enter a key: ")
         data[key] = clipboard.paste()
         json.dump(data, f)
         print("Data saved")
-
-
-def load_data(file_path):
-    try:
-        with open(file_path, "r") as f:
-            data = json.load(f)
-            return data
-    except:
-        return {}
     
 
 def search_for_key(file_path):
@@ -47,8 +40,7 @@ def list_data(file_path):
             pprint.pprint(data)
     except FileNotFoundError:
         print("File was not found")
-
-
+        
 
 def main():
     if len(sys.argv) == 2:
