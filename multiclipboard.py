@@ -32,11 +32,10 @@ def search_for_key(file_path):
     key = input("What key are you looking for? ")
     with open(file_path, "r") as f:
         data = json.load(f)
-        for entry in data:
-            if entry == key.lower():
-                clipboard.copy(data[entry])
-                print("The key {} contains the following value: '{}' and it has been copied to your clipboard".format(key, data[entry]))
-                return
+        if key in data:
+            clipboard.copy(data[key])
+            print("The key {} contains the following value: '{}' and it has been copied to your clipboard".format(key, data[key]))
+            return
         print("There are no keys matching your input.")
 
 
