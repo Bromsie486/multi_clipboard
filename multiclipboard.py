@@ -34,7 +34,8 @@ def search_for_key(file_path):
         data = json.load(f)
         for entry in data:
             if entry == key.lower():
-                print("The key {} contains the following value: '{}'".format(key, data[entry]))
+                clipboard.copy(data[entry])
+                print("The key {} contains the following value: '{}' and it has been copied to your clipboard".format(key, data[entry]))
                 return
         print("There are no keys matching your input.")
 
