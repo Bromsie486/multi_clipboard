@@ -7,12 +7,13 @@ import pprint
 SAVED_DATA = "clipboard.json"
 
 
-def save_data(file_path):
-    with open(file_path, "r") as f:
-        try:
+def save_data(file_path):  
+    try:
+        with open(file_path, "r") as f:
             data = json.load(f) 
-        except:
-            data = {}
+    except:
+        open(file_path, "x")
+        data = {}
 
     with open(file_path, "w") as f:
         key = input("Enter a key: ")
@@ -27,7 +28,7 @@ def search_for_key(file_path):
         data = json.load(f)
         if key in data:
             clipboard.copy(data[key])
-            print("The key {} contains the following value: '{}' and it has been copied to your clipboard".format(key, data[key]))
+            print("The key {} contains the following value: '{}' and it has been copied to your clipboard.".format(key, data[key]))
             return
         print("There are no keys matching your input.")
 
